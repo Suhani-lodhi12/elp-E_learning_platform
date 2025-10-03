@@ -1,0 +1,114 @@
+const dummyCourses = [
+    {
+        certification: "Certified Python Developer",
+        courseId: 1,
+        courseName: "Python for Beginners",
+        courseTopic: "Programming Basics",
+        description: "Learn Python from scratch with hands-on projects.",
+        discount: 10,
+        keyFeature: "Beginner-friendly, Real-world projects",
+        learningOutcome: "Master Python syntax, OOP, and automation.",
+        pdf: "courses/python/python_course_outline.pdf",
+        prerequisite: "No prior experience required",
+        price: 999,
+        refundPolicy: "7-day money-back guarantee",
+        starRank: 4.5,
+        status: { statusId: 1, status: "launched" },
+        subscriber: 150,
+        thumbnail: "courses/python/python_thumbnail.jpeg",
+        totalClick: 5000,
+        totalHour: 30
+    },
+    {
+        certification: "Advanced Data Science Certification",
+        courseId: 2,
+        courseName: "Data Science with Python",
+        courseTopic: "Machine Learning, AI",
+        description: "Comprehensive course covering Data Science concepts.",
+        discount: 20,
+        keyFeature: "AI models, Deep Learning",
+        learningOutcome: "Build ML models, analyze large datasets.",
+        pdf: "courses/data_science/data_science_syllabus.pdf",
+        prerequisite: "Basic Python knowledge required",
+        price: 2999,
+        refundPolicy: "No refund policy",
+        starRank: 4.8,
+        status: { statusId: 2, status: "upcoming" },
+        subscriber: 250,
+        thumbnail: "courses/data_science/data_science_thumbnail.jpeg",
+        totalClick: 7000,
+        totalHour: 45
+    },
+    {
+        certification: "JavaScript Web Developer",
+        courseId: 3,
+        courseName: "Full-Stack Web Development",
+        courseTopic: "Frontend & Backend Development",
+        description: "Learn HTML, CSS, JavaScript, Node.js, and React.",
+        discount: 15,
+        keyFeature: "MERN stack, Hands-on projects",
+        learningOutcome: "Develop full-stack applications.",
+        pdf: "courses/web_dev/full_stack_syllabus.pdf",
+        prerequisite: "Basic programming knowledge",
+        price: 1999,
+        refundPolicy: "14-day refund policy",
+        starRank: 4.7,
+        status: { statusId: 3, status: "launched" },
+        subscriber: 500,
+        thumbnail: "courses/web_dev/web_dev_thumbnail.jpeg",
+        totalClick: 9000,
+        totalHour: 50
+    }
+];
+
+console.log(dummyCourses);
+
+
+
+
+
+[
+    {
+        "trainerId": 101,
+        "user": {
+            "userId": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "phone": "+1234567890"
+        },
+        "experience": "5 years",
+        "skills": "Python, Data Science, Machine Learning",
+        "launchedCourse": 3,
+        "profession": "Senior Data Scientist",
+        "education": "M.Sc. in Computer Science"
+    },
+    {
+        "trainerId": 102,
+        "user": {
+            "userId": 2,
+            "name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "phone": "+9876543210"
+        },
+        "experience": "8 years",
+        "skills": "Java, Spring Boot, Microservices",
+        "launchedCourse": 5,
+        "profession": "Software Architect",
+        "education": "B.Tech in Information Technology"
+    },
+    {
+        "trainerId": 103,
+        "user": {
+            "userId": 3,
+            "name": "Robert Johnson",
+            "email": "robert.johnson@example.com",
+            "phone": "+1122334455"
+        },
+        "experience": "10 years",
+        "skills": "JavaScript, React, Node.js",
+        "launchedCourse": 7,
+        "profession": "Full-Stack Developer",
+        "education": "MCA in Computer Applications"
+    }
+]
+

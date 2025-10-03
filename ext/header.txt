@@ -1,0 +1,617 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELearning Platform</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ffbe0b;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--light-bg);
+        }
+        
+        /* Navbar Styling */
+        .navbar-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 0.75rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            letter-spacing: 1px;
+            padding: 0.3rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .navbar-brand:hover {
+            background-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255,255,255,0.15);
+            color: var(--accent-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        .navbar-nav .nav-link .material-icons {
+            font-size: 1.25rem;
+            vertical-align: middle;
+        }
+        
+        /* Search Form */
+        .search-form {
+            position: relative;
+            max-width: 400px;
+        }
+        
+        .search-form .form-control {
+            border-radius: 50px;
+            padding-left: 1rem;
+            padding-right: 3.5rem;
+            background-color: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .search-form .form-control:focus {
+            background-color: white;
+            color: var(--dark-text);
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+        
+        .search-form .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .search-form .btn-search {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+            transition: all 0.3s;
+        }
+        
+        .search-form .btn-search:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        /* User Dropdown */
+        .user-dropdown {
+            margin-left: 1rem;
+        }
+        
+        .user-dropdown .dropdown-toggle {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .user-dropdown .dropdown-toggle:hover,
+        .user-dropdown .dropdown-toggle:focus {
+            background-color: rgba(255,255,255,0.25);
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        
+        .user-dropdown .dropdown-menu {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 0;
+            min-width: 250px;
+        }
+        
+        .user-dropdown .dropdown-header {
+            background-color: var(--light-bg);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .user-dropdown .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-dropdown .dropdown-item:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        .user-dropdown .dropdown-item.danger {
+            color: #dc3545;
+        }
+        
+        .user-dropdown .dropdown-item.danger:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* Modals */
+        .modal-content {
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.25rem 1.5rem;
+            border-bottom: none;
+        }
+        
+        .modal-header .btn-close {
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            opacity: 1;
+            transition: all 0.3s;
+        }
+        
+        .modal-header .btn-close:hover {
+            background-color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-footer {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.25);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2b6cb0;
+            border-color: #2b6cb0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn-info {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background-color: #6920c5;
+            border-color: #6920c5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(131, 56, 236, 0.3);
+            color: white;
+        }
+        
+        .btn-outline-secondary {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Material Icons */
+        .material-icons {
+            vertical-align: middle;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- SignUp SignIn Success Fail Handling -->
+<input type="hidden" id="user_signup_report" value="${param.signup}">
+<input type="hidden" id="user_signin_report" value="${param.signin_status}">
+
+<!-- SignUp Step-3 (SignUp/SignIn Fail) Modal -->
+<div class="modal fade" id="message_box" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="message_title">SignUp</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="mb-4">
+                    <span class="material-icons d-block mx-auto fs-1 text-danger mb-3">cancel</span>
+                    <p id="message" class="lead"></p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="signupbox">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SignUp Step-2 Modal -->
+<div class="modal fade" id="signup_form" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="signup.do" method="post" id="signup_inner_form" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signup_title">Create Your Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" name="user_type_id" id="utype" value="2">
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">person</i></span>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">lock</i></span>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">phone</i></span>
+                            <input type="tel" name="phone" class="form-control" id="phone" placeholder="Your phone number" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">public</i></span>
+                            <input list="country_list" type="text" class="form-control" id="country" placeholder="Select your country" required>
+                            <input type="hidden" name="country_id" id="country_id">
+                            <datalist id="country_list">
+                                <c:forEach var="ct" items="${countries}">
+                                    <option value="${ct.country}" id="${ct.countryId}">
+                                </c:forEach>
+                            </datalist>
+                        </div>
+                    </div>
+                    
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                        <label class="form-check-label" for="termsCheck">
+                            I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- SignIn Step-1 Modal -->
+<div class="modal fade" id="signin_form" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="signin.do" method="post" class="needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signin_title">Welcome Back</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-4">
+                        <img src="static/media/images/logo.png" alt="Logo" height="60" class="mb-3">
+                        <p class="text-muted">Sign in to access your account</p>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="signin_email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">email</i></span>
+                            <input type="email" autocomplete="off" class="form-control" name="signin_email" id="signin_email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="signin_password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="material-icons">lock</i></span>
+                            <input type="password" class="form-control" name="signin_password" id="signin_password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberCheck">
+                            <label class="form-check-label" for="rememberCheck">Remember me</label>
+                        </div>
+                        <a href="#" class="text-decoration-none">Forgot password?</a>
+                    </div>
+                </div>
+                <div class="modal-footer flex-column">
+                    <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    <div class="mt-3 text-center w-100">
+                        <span class="text-muted">Don't have an account?</span>
+                        <a href="#" class="text-decoration-none" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#signup_form">Sign Up</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Main Navbar -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="index.do">
+                <i class="material-icons me-2">school</i>EduLearn
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarContent" aria-controls="navbarContent" 
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.do">
+                            <i class="material-icons me-1">home</i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons me-1">book</i>Courses
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons me-1">forum</i>Community
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="material-icons me-1">help</i>Help Center
+                        </a>
+                    </li>
+                </ul>
+                
+                <form action="search.do" class="search-form d-flex me-auto">
+                    <input class="form-control" type="search" placeholder="Search for courses..." aria-label="Search">
+                    <button class="btn btn-search" type="submit">
+                        <i class="material-icons">search</i>
+                    </button>
+                </form>
+                
+                <div class="user-dropdown dropdown ms-3">
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="static/media/images/user.png" alt="Profile" width="30" height="30" class="rounded-circle me-2">
+                                <span class="d-none d-md-inline">${sessionScope.user.name}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">
+                                    <img src="static/media/images/user.png" alt="User" class="user-avatar mb-2">
+                                    <h6 class="mt-2 mb-0">${sessionScope.user.name}</h6>
+                                    <small class="text-muted">${sessionScope.user.email}</small>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="profile.do"><i class="material-icons me-2">person</i>My Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="material-icons me-2">school</i>My Courses</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="material-icons me-2">bookmark</i>Saved Courses</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="material-icons me-2">settings</i>Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item danger" href="logout.do"><i class="material-icons me-2">logout</i>Logout</a></li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="material-icons me-1">account_circle</i>
+                                <span class="d-none d-md-inline">Account</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signin_form">
+                                        <i class="material-icons me-2">login</i>Sign In
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signup_form">
+                                        <i class="material-icons me-2">person_add</i>Sign Up
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="material-icons me-2">help</i>Help Center</a></li>
+                            </ul>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Welcome Banner (only shown for logged in users) -->
+    <c:if test="${not empty sessionScope.user}">
+        <div class="welcome-banner text-center py-2">
+            <i class="material-icons align-middle me-1">waving_hand</i> 
+            Welcome back, ${sessionScope.user.name}! Continue your learning journey.
+        </div>
+    </c:if>
+</header>
+
+<!-- Main Content Container (Add your page content here) -->
+<main class="container py-4">
+    <!-- Content goes here -->
+</main>
+
+<!-- Bootstrap JS with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom Script -->
+<script>
+    // Initialize tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    
+    // Handle authentication messages
+    document.addEventListener('DOMContentLoaded', function() {
+        // SignUp message handling
+        const signupReport = document.getElementById('user_signup_report').value;
+        if(signupReport && signupReport !== '') {
+            const messageBox = new bootstrap.Modal(document.getElementById('message_box'));
+            const messageTitle = document.getElementById('message_title');
+            const messageContent = document.getElementById('message');
+            
+            messageTitle.innerText = 'Sign Up Status';
+            messageContent.innerText = signupReport === 'fail' ? 
+                'Registration failed. Please try again with different credentials.' :
+                'Registration successful! Please sign in with your credentials.';
+            
+            messageBox.show();
+        }
+        
+        // SignIn message handling
+        const signinReport = document.getElementById('user_signin_report').value;
+        if(signinReport && signinReport === 'fail') {
+            const messageBox = new bootstrap.Modal(document.getElementById('message_box'));
+            const messageTitle = document.getElementById('message_title');
+            const messageContent = document.getElementById('message');
+            
+            messageTitle.innerText = 'Sign In Status';
+            messageContent.innerText = 'Sign in failed. Please check your credentials and try again.';
+            
+            messageBox.show();
+        }
+        
+        // Form validation
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    });
+</script>
+</body>
+</html>
