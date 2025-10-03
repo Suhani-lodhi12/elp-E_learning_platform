@@ -274,7 +274,7 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3 bg-primary bg-opacity-10 p-3 rounded">
-                                        <i class="material-icons text-primary">topic</i>
+                                        <i class="material-icons text-primary">topics</i>
                                     </div>
                                     <div>
                                         <h6 class="text-muted mb-1">Total Topics</h6>
