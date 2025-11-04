@@ -48,7 +48,7 @@ public class SaveCourseServlet extends HttpServlet {
 
                             switch (fieldName) {
                                 case "course_name":
-                                    course.setCourseName(fieldValue);
+                                    course.setCourseName(fieldValue.trim()); 
                                     break;
                                 case "learning_outcomes":
                                     course.setLearningOutcome(fieldValue);
